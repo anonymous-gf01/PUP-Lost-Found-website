@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PUP Lost & Found System</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; background: #fdfdfd; }
+    h1 { color: maroon; }
+    form { background: #fff; padding: 20px; border: 1px solid #ddd; margin-bottom: 30px; border-radius: 10px; max-width: 600px; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input, textarea, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { background-color: maroon; color: white; padding: 10px 15px; border: none; border-radius: 5px; margin-top: 15px; cursor: pointer; }
+    .confirmation { background: #e2ffe2; padding: 15px; margin-top: 20px; border-left: 5px solid green; white-space: pre-wrap; border-radius: 5px; display: none; }
+  </style>
+</head>
+<body>
+
+<h1>PUP Lost and Found Digital Kiosk</h1>
+
+<!-- LOST ITEM FORM -->
+<h2>📌 Report Lost Item</h2>
+<form id="lostForm">
+  <label>Item Name:</label>
+  <input type="text" name="itemLost" required>
+
+  <label>Description:</label>
+  <textarea name="descLost" rows="3" required></textarea>
+
+  <label>Where You Might Have Lost It:</label>
+  <input type="text" name="lostLocation" required>
+
+  <label>Your Contact Info (Email or Phone):</label>
+  <input type="text" name="lostContact" required>
+
+  <button type="submit">Submit Lost Report</button>
+</form>
+
+<!-- FOUND ITEM FORM -->
+<h2>✅ Report Found Item</h2>
+<form id="foundForm">
+  <label>Item Name:</label>
+  <input type="text" name="itemFound" required>
+
+  <label>Description:</label>
+  <textarea name="descFound" rows="3" required></textarea>
+
+  <label>Where You Found It:</label>
+  <input type="text" name="foundLocation" required>
+
+  <label>Your Contact Info (Email or Phone):</label>
+  <input type="text" name="foundContact" required>
+
+  <label>Where Did You Leave the Item?</label>
+  <select name="dropLocation" required>
+    <option value="">Select Option</option>
+    <option value="PUP Guardhouse">📍 PUP Guardhouse</option>
+    <option value="With the person who found it">🤝 Meet with Finder</option>
+    <option value="PUP Help Desk">🆘 PUP Help Desk</option>
+  </select>
+
+  <button type="submit">Submit Found Report</button>
+</form>
+
+<div id="confirmationBox" class="confirmation"></div>
+
+<script>
+const confirmationBox = document.getElementById("confirmationBox");
+
+// LOST ITEM
+document.getElementById("lostForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const item = e.target.itemLost.value;
+  const desc = e.target.descLost.value;
+  const location = e.target.lostLocation.value;
+  const contact = e.target.lostContact.value;
+
+  confirmationBox.style.display = "block";
+  confirmationBox.innerText = 
+    `📌 Lost Item Report Submitted:\n\n` +
+    `🧾 Item: ${item}\n` +
+    `📝 Description: ${desc}\n` +
+    `📍 Last Seen At: ${location}\n` +
+    `📞 Contact: ${contact}\n\n` +
+    `✔️ We will match this with found item reports.\nYou'll be notified if there's a match.`;
+
+  e.target.reset();
+});
+
+// FOUND ITEM
+document.getElementById("foundForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const item = e.target.itemFound.value;
+  const desc = e.target.descFound.value;
+  const location = e.target.foundLocation.value;
+  const contact = e.target.foundContact.value;
+  const drop = e.target.dropLocation.value;
+
+  confirmationBox.style.display = "block";
+  confirmationBox.innerText = 
+    `✅ Found Item Report Submitted:\n\n` +
+    `🧾 Item: ${item}\n` +
+    `📝 Description: ${desc}\n` +
+    `📍 Found At: ${location}\n` +
+    `📞 Your Contact: ${contact}\n` +
+    `📦 Dropped Off At: ${drop}\n\n` +
+    `✔️ If this matches a lost item report, the owner will be contacted.`;
+
+  e.target.reset();
+});
+</script>
+
+</body>
+</html>
